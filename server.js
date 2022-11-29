@@ -29,6 +29,16 @@ app.get('/',(req, res) =>{
     res.sendFile('index.html', {root: 'public'})
 })
 
+//Ruta login
+app.get('/login',(req, res) =>{
+  res.sendFile('login.html', {root: 'public'})
+})
+
+//Ruta registro
+app.get('/signup',(req, res) =>{
+  res.sendFile('signup.html', {root: 'public'})
+})
+
 //Arrancamos el server
 const Port = process.env.PORT || 5000
 app.listen(Port, () =>{

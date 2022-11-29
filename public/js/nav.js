@@ -1,5 +1,14 @@
+
 //Obtener la etiqueta para el menu+++
 const  nabar = document.querySelector('.navbar')
+
+window.addEventListener('scroll', () =>{
+    if(screenY >= 180){
+        navbar.classList.add('bg')
+    }else{
+        navbar.classList.remove('bg')
+    }
+})
 
 const createNavbar = () =>{
     nabar.innerHTML +=
@@ -35,3 +44,22 @@ const createNavbar = () =>{
 }
 
 createNavbar()
+
+let userIcon = document.querySelector('.user-icon')
+let userPopupIcon = document.querySelector('.user-icon-popup')
+
+userIcon.addEventListener('click', () =>{
+    userPopupIcon.classList.toggle('active')
+})
+
+let text = userPopupIcon.querySelector('p')
+let btnLogin = userPopupIcon.querySelector('a')
+
+let user = JSON.parse(sessionStorage.user || null)
+if(user == null){
+    text.innerHTML = 'Login to you account'
+    btnLogin.innerHTML = 'Login'
+    btnLogin.addEventListener('click', () =>{
+        location.href = '/login'
+    })
+}
