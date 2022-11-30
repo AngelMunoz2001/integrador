@@ -19,7 +19,7 @@ btnRegistro.addEventListener('click', () => {
                 fname,
                 email,
                 phone,
-                jpb,
+                job,
                 pass
             })
         }

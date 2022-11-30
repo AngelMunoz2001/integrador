@@ -1,7 +1,7 @@
 const sendData = (path, data) =>{
     fetch(path, {
         method: 'post',
-        headers: new headers({
+        headers: new Headers({
             'Content-Type': 'application/json'
         }),
         body: JSON.stringify(data)
@@ -12,4 +12,7 @@ const sendData = (path, data) =>{
 
 const processData = data =>{
     console.log(data)
+    if(data.mensaje == 'sucess'){
+        window.location.href = '/login' 
+    }
 }

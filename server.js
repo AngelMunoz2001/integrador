@@ -42,7 +42,6 @@ app.get('/signup',(req, res) =>{
 
 app.post('/signup',(req, res) =>{
   const { fname, email, phone, job, pass} = req.body
-
   const users = collection(db, "users")
   getDoc(doc(users, email)).then(user =>{
     if(user.exists()){
@@ -57,7 +56,11 @@ app.post('/signup',(req, res) =>{
           setDoc(doc(users, email), req.body).then(data =>{
             res.json({
               'mensaje': 'success',
-              'data': JSON.stringify(data)
+              'data': {
+                fname,
+                email,
+                phone
+              }
             })
           })
         })
