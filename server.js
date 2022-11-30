@@ -1,7 +1,8 @@
 import express from 'express'
 import bcrypt from 'bcrypt'
 import { initializeApp } from 'firebase/app'
-import { getFirestore } from 'firebase/firestore'
+import { getFirestore, collection, getDoc, setDoc, doc } from 'firebase/firestore'
+
 
 const firebaseConfig = {
   apiKey: "AIzaSyAZsXttXhJ4RP4V7-pAoOSqHtADk_UVTsw",
@@ -38,6 +39,34 @@ app.get('/login',(req, res) =>{
 app.get('/signup',(req, res) =>{
   res.sendFile('signup.html', {root: 'public'})
 })
+
+app.post('/signup',(req, res) =>{
+  const { fname, email, phone, job, pass} = req.body
+
+  const users = collection(db, "users")
+  getDoc(doc(users, email)).then(user =>{
+    if(user.exists()){
+      return res.json({
+        'mensaje:': 'Correo ya existe'
+      })
+    }else{
+      //Encripar la contraseña
+      bcrypt.genSalt(10, (err, salt) =>{
+        bcrypt.hash(pass, salt, (err, hash) =>{
+          req.body.pass = hash
+          setDoc(doc(users, email), req.body).then(data =>{
+            res.json({
+              'mensaje': 'success',
+              'data': JSON.stringify(data)
+            })
+          })
+        })
+      })
+    }
+  })
+})
+
+//
 
 //Arrancamos el server
 const Port = process.env.PORT || 5000
